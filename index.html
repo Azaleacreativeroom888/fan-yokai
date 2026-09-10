@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>妖怪帖 ― 夜に棲むものたちの記録</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-navy:#0b1220;
+    --bg-navy-mid:#121e35;
+    --box-navy:#1e2d4a;
+    --box-navy-soft:#182643;
+    --box-border:#33456b;
+    --ivory:#f2efe3;
+    --ivory-dim:#cdc9ba;
+    --red:#b23b3b;
+    --red-bright:#d1504f;
+    --muted:#8b96b3;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--bg-navy);
+    color:var(--ivory);
+    font-family:"Zen Kaku Gothic New", sans-serif;
+    font-weight:400;
+    line-height:1.9;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,.brush{
+    font-family:"Shippori Mincho", serif;
+  }
+
+  a{color:inherit;}
+
+  ::selection{
+    background:var(--red);
+    color:var(--ivory);
+  }
+
+  /* ---------- 上部の波紋様の帯（絵巻物の区切りを模した装飾） ---------- */
+  .cloud-band{
+    width:100%;
+    height:28px;
+    display:block;
+  }
+
+  /* ---------- ナビゲーション ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 6vw;
+    background:rgba(11,18,32,0.86);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--box-border);
+  }
+
+  .site-mark{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    font-family:"Shippori Mincho", serif;
+    font-size:1.25rem;
+    font-weight:700;
+    letter-spacing:0.08em;
+  }
+
+  .site-mark span{
+    color:var(--red-bright);
+    font-size:0.95rem;
+    font-weight:400;
+  }
+
+  nav ul{
+    list-style:none;
+    display:flex;
+    gap:2.2rem;
+    margin:0;
+    padding:0;
+  }
+
+  nav a{
+    text-decoration:none;
+    font-size:0.95rem;
+    color:var(--ivory-dim);
+    position:relative;
+    padding-bottom:4px;
+    transition:color 0.25s ease;
+  }
+
+  nav a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:0%;
+    height:1px;
+    background:var(--red-bright);
+    transition:width 0.3s ease;
+  }
+
+  nav a:hover,
+  nav a:focus-visible{
+    color:var(--ivory);
+  }
+
+  nav a:hover::after,
+  nav a:focus-visible::after{
+    width:100%;
+  }
+
+  .nav-toggle{display:none;}
+
+  /* ---------- ヒーロー ---------- */
+  .hero{
+    position:relative;
+    min-height:92vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:8vh 6vw 10vh;
+    background:
+      radial-gradient(ellipse at 70% 18%, rgba(178,59,59,0.10), transparent 45%),
+      radial-gradient(ellipse at 30% 85%, rgba(30,45,74,0.9), transparent 55%),
+      linear-gradient(180deg, var(--bg-navy) 0%, var(--bg-navy-mid) 60%, var(--bg-navy) 100%);
+    overflow:hidden;
+  }
+
+  .moon{
+    position:absolute;
+    top:8%;
+    right:10%;
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #f6f2e2, #d8d2b8 55%, transparent 78%);
+    box-shadow:0 0 90px 30px rgba(242,239,227,0.10);
+    opacity:0.85;
+  }
+
+  .ghost-kanji{
+    position:absolute;
+    left:-4vw;
+    bottom:-8vh;
+    font-size:min(48vw, 620px);
+    font-weight:800;
+    color:transparent;
+    -webkit-text-stroke:1px rgba(178,59,59,0.18);
+    line-height:1;
+    pointer-events:none;
+    user-select:none;
+  }
+
+  .hitodama{
+    position:absolute;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(209,80,79,0.95), rgba(209,80,79,0));
+    filter:blur(1px);
+    animation:drift 14s ease-in-out infinite;
+    opacity:0.75;
+  }
+
+  .hitodama.h2{animation-duration:19s; animation-delay:-4s; left:62%; top:60%;}
+  .hitodama.h3{animation-duration:23s; animation-delay:-9s; left:40%; top:25%;}
+  .hitodama.h1{left:20%; top:70%;}
+
+  @keyframes drift{
+    0%{transform:translate(0,0) scale(1); opacity:0.35;}
+    50%{transform:translate(30px,-60px) scale(1.3); opacity:0.85;}
+    100%{transform:translate(0,0) scale(1); opacity:0.35;}
+  }
+
+  .hero-inner{
+    position:relative;
+    z-index:2;
+    max-width:640px;
+    text-align:left;
+  }
+
+  .hero-eyebrow{
+    display:inline-block;
+    writing-mode:vertical-rl;
+    font-family:"Shippori Mincho", serif;
+    font-size:0.95rem;
+    letter-spacing:0.4em;
+    color:var(--red-bright);
+    height:110px;
+    margin-bottom:1.4rem;
+  }
+
+  .hero h1{
+    font-size:clamp(2.6rem, 7vw, 4.6rem);
+    margin:0 0 0.6rem;
+    font-weight:800;
+    letter-spacing:0.05em;
+    color:var(--ivory);
+    text-shadow:0 0 40px rgba(178,59,59,0.25);
+  }
+
+  .hero .sub{
+    font-family:"Shippori Mincho", serif;
+    font-size:1.05rem;
+    color:var(--red-bright);
+    margin:0 0 1.6rem;
+    letter-spacing:0.08em;
+  }
+
+  .hero p.lead{
+    font-size:1.02rem;
+    color:var(--ivory-dim);
+    max-width:34em;
+    margin:0 0 2.2rem;
+  }
+
+  .btn{
+    display:inline-block;
+    padding:0.9em 2em;
+    border:1px solid var(--red-bright);
+    color:var(--ivory);
+    text-decoration:none;
+    font-size:0.95rem;
+    letter-spacing:0.05em;
+    background:rgba(178,59,59,0.12);
+    transition:background 0.3s ease, transform 0.3s ease;
+  }
+
+  .btn:hover,
+  .btn:focus-visible{
+    background:var(--red);
+    transform:translateY(-2px);
+  }
+
+  /* ---------- セクション共通 ---------- */
+  section{
+    padding:6.5rem 6vw;
+    max-width:1080px;
+    margin:0 auto;
+  }
+
+  .section-label{
+    writing-mode:vertical-rl;
+    font-family:"Shippori Mincho", serif;
+    font-size:0.85rem;
+    letter-spacing:0.35em;
+    color:var(--muted);
+    height:90px;
+    display:inline-block;
+    margin-bottom:0;
+  }
+
+  .section-head{
+    display:flex;
+    gap:1.4rem;
+    align-items:flex-start;
+    margin-bottom:2.4rem;
+  }
+
+  .section-head h2{
+    font-size:1.9rem;
+    margin:0;
+    font-weight:700;
+    color:var(--ivory);
+  }
+
+  /* ---------- 紺を薄くしたボックス ---------- */
+  .box{
+    background:var(--box-navy);
+    border:1px solid var(--box-border);
+    border-left:3px solid var(--red);
+    padding:2.2rem 2.4rem;
+  }
+
+  .intro-box p{
+    color:var(--ivory-dim);
+    margin:0 0 1.1rem;
+    max-width:52em;
+  }
+
+  .intro-box p:last-child{margin-bottom:0;}
+
+  /* ---------- カードグリッド ---------- */
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1.6rem;
+    margin-top:2.4rem;
+  }
+
+  .card{
+    background:var(--box-navy-soft);
+    border:1px solid var(--box-border);
+    padding:1.9rem 1.7rem;
+    text-decoration:none;
+    display:flex;
+    flex-direction:column;
+    gap:0.8rem;
+    transition:border-color 0.3s ease, transform 0.3s ease, background 0.3s ease;
+  }
+
+  .card:hover,
+  .card:focus-visible{
+    border-color:var(--red-bright);
+    background:var(--box-navy);
+    transform:translateY(-4px);
+  }
+
+  .card .mark{
+    font-family:"Shippori Mincho", serif;
+    font-size:0.85rem;
+    color:var(--red-bright);
+    letter-spacing:0.15em;
+  }
+
+  .card h3{
+    margin:0;
+    font-size:1.25rem;
+    color:var(--ivory);
+  }
+
+  .card p{
+    margin:0;
+    color:var(--ivory-dim);
+    font-size:0.92rem;
+  }
+
+  /* ---------- フッター ---------- */
+  footer{
+    border-top:1px solid var(--box-border);
+    background:var(--bg-navy-mid);
+    padding:4.5rem 6vw 3rem;
+  }
+
+  .footer-grid{
+    max-width:1080px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:3rem;
+  }
+
+  .footer-grid h4{
+    font-family:"Shippori Mincho", serif;
+    font-size:1.05rem;
+    margin:0 0 1rem;
+    color:var(--ivory);
+  }
+
+  .contact-form{
+    display:flex;
+    flex-direction:column;
+    gap:0.8rem;
+    max-width:420px;
+  }
+
+  .contact-form input,
+  .contact-form textarea{
+    background:var(--box-navy-soft);
+    border:1px solid var(--box-border);
+    color:var(--ivory);
+    padding:0.7em 0.9em;
+    font-family:inherit;
+    font-size:0.92rem;
+  }
+
+  .contact-form textarea{resize:vertical; min-height:100px;}
+
+  .contact-form input:focus,
+  .contact-form textarea:focus,
+  .contact-form input:focus-visible,
+  .contact-form textarea:focus-visible{
+    outline:1px solid var(--red-bright);
+  }
+
+  .contact-form button{
+    align-self:flex-start;
+    background:transparent;
+    border:1px solid var(--red-bright);
+    color:var(--ivory);
+    padding:0.7em 1.8em;
+    font-family:inherit;
+    font-size:0.92rem;
+    cursor:pointer;
+    transition:background 0.3s ease;
+  }
+
+  .contact-form button:hover,
+  .contact-form button:focus-visible{
+    background:var(--red);
+  }
+
+  .hub-links ul{
+    list-style:none;
+    margin:0 0 1.6rem;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:0.6rem;
+  }
+
+  .hub-links a{
+    text-decoration:none;
+    color:var(--ivory-dim);
+    font-size:0.92rem;
+    border-bottom:1px dotted transparent;
+    transition:border-color 0.25s ease, color 0.25s ease;
+  }
+
+  .hub-links a:hover,
+  .hub-links a:focus-visible{
+    color:var(--ivory);
+    border-color:var(--red-bright);
+  }
+
+  .ai-notice{
+    font-size:0.78rem;
+    color:var(--muted);
+    line-height:1.8;
+    border-top:1px solid var(--box-border);
+    margin-top:2.4rem;
+    padding-top:1.6rem;
+    max-width:1080px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .copyright{
+    text-align:center;
+    font-size:0.78rem;
+    color:var(--muted);
+    margin-top:1.6rem;
+  }
+
+  /* ---------- レスポンシブ ---------- */
+  @media (max-width: 860px){
+    .card-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .moon{width:130px; height:130px; top:6%; right:6%;}
+  }
+
+  @media (max-width: 640px){
+    header{padding:14px 5vw;}
+    nav ul{gap:1.1rem;}
+    nav a{font-size:0.85rem;}
+    .hero{min-height:auto; padding:14vh 6vw 8vh;}
+    .hero-eyebrow{display:none;}
+    section{padding:4.5rem 6vw;}
+    .box{padding:1.7rem 1.5rem;}
+    .section-label{display:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .hitodama{animation:none;}
+    .btn, .card, nav a::after{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="site-mark">妖怪帖<span>―夜に棲むものたちの記録―</span></div>
+  <nav>
+    <ul>
+      <li><a href="index.html">ホーム</a></li>
+      <li><a href="blog.html">日誌</a></li>
+      <li><a href="gallery.html">ギャラリー</a></li>
+      <li><a href="about.html">about</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="moon" aria-hidden="true"></div>
+  <div class="ghost-kanji" aria-hidden="true">妖</div>
+  <span class="hitodama h1" aria-hidden="true"></span>
+  <span class="hitodama h2" aria-hidden="true"></span>
+  <span class="hitodama h3" aria-hidden="true"></span>
+
+  <div class="hero-inner">
+    <span class="hero-eyebrow">百鬼夜行</span>
+    <h1>妖怪帖</h1>
+    <p class="sub">夜に棲むものたちの記録</p>
+    <p class="lead">
+      古今東西の妖怪や怪異について調べ、描き、書きためていく個人的な記録帳です。
+      文献をたどった日の覚え書きから、姿を想像して描いた絵まで、
+      少しずつここに積み重ねていきます。
+    </p>
+    <a class="btn" href="blog.html">日誌を読む</a>
+  </div>
+</section>
+
+<section class="intro" id="about-intro">
+  <div class="section-head">
+    <span class="section-label">序</span>
+    <h2>このサイトについて</h2>
+  </div>
+  <div class="box intro-box">
+    <p>
+      妖怪や怪異の話が好きで、資料を読んでは気になった姿や逸話を書き留めているうちに、
+      それを一つの場所にまとめておきたくなりました。ここはその覚え書きと、
+      そこから生まれた漫画やイラストを置いておく場所です。
+    </p>
+    <p>
+      有名な妖怪から、地方に伝わるあまり知られていないものまで、
+      順番にたどりながら少しずつ紹介していく予定です。
+      詳しい自己紹介や制作の姿勢については、about のページにまとめています。
+    </p>
+  </div>
+</section>
+
+<section class="explore">
+  <div class="section-head">
+    <span class="section-label">案内</span>
+    <h2>サイトの中身</h2>
+  </div>
+  <div class="card-grid">
+    <a class="card" href="blog.html">
+      <span class="mark">日誌</span>
+      <h3>勉強の記録</h3>
+      <p>調べ物をした日の日付と内容だけを、短く積み重ねていく覚え書きです。</p>
+    </a>
+    <a class="card" href="gallery.html">
+      <span class="mark">画</span>
+      <h3>ギャラリー</h3>
+      <p>妖怪をモチーフにした漫画やイラストを並べていく展示室です。</p>
+    </a>
+    <a class="card" href="about.html">
+      <span class="mark">about</span>
+      <h3>このサイトと私について</h3>
+      <p>サイトを作っている経緯や、妖怪との付き合い方について書いています。</p>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>お問い合わせ</h4>
+      <form class="contact-form" action="https://formspree.io/f/maqvpvoz" method="POST">
+        <input type="text" name="name" placeholder="お名前" required>
+        <input type="email" name="email" placeholder="メールアドレス" required>
+        <textarea name="message" placeholder="メッセージ" required></textarea>
+        <button type="submit">送信する</button>
+      </form>
+    </div>
+    <div class="hub-links">
+      <h4>Azalea Creative Room</h4>
+      <ul>
+        <li><a href="https://azalea72.github.io/">Azalea Creative Room トップ</a></li>
+        <li><a href="index.html">妖怪帖 ホーム</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="ai-notice">
+    当サイトに掲載しているイラスト・漫画・文章の無断転載、およびAIの学習データとしての利用を禁じます。
+  </p>
+  <p class="copyright">© 妖怪帖</p>
+</footer>
+
+</body>
+</html>
