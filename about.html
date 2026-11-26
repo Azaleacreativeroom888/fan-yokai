@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>about ― 妖怪帖</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-navy:#0b1220;
+    --bg-navy-mid:#121e35;
+    --box-navy:#1e2d4a;
+    --box-navy-soft:#182643;
+    --box-border:#33456b;
+    --ivory:#f2efe3;
+    --ivory-dim:#cdc9ba;
+    --red:#b23b3b;
+    --red-bright:#d1504f;
+    --muted:#8b96b3;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--bg-navy);
+    color:var(--ivory);
+    font-family:"Zen Kaku Gothic New", sans-serif;
+    font-weight:400;
+    line-height:1.9;
+  }
+
+  h1,h2,h3{
+    font-family:"Shippori Mincho", serif;
+  }
+
+  a{color:inherit;}
+
+  ::selection{
+    background:var(--red);
+    color:var(--ivory);
+  }
+
+  /* ---------- ナビゲーション ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 6vw;
+    background:rgba(11,18,32,0.86);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--box-border);
+  }
+
+  .site-mark{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    font-family:"Shippori Mincho", serif;
+    font-size:1.25rem;
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-decoration:none;
+    color:var(--ivory);
+  }
+
+  .site-mark span{
+    color:var(--red-bright);
+    font-size:0.95rem;
+    font-weight:400;
+  }
+
+  nav ul{
+    list-style:none;
+    display:flex;
+    gap:2.2rem;
+    margin:0;
+    padding:0;
+  }
+
+  nav a{
+    text-decoration:none;
+    font-size:0.95rem;
+    color:var(--ivory-dim);
+    position:relative;
+    padding-bottom:4px;
+    transition:color 0.25s ease;
+  }
+
+  nav a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:0%;
+    height:1px;
+    background:var(--red-bright);
+    transition:width 0.3s ease;
+  }
+
+  nav a:hover,
+  nav a:focus-visible{
+    color:var(--ivory);
+  }
+
+  nav a:hover::after,
+  nav a:focus-visible::after{
+    width:100%;
+  }
+
+  nav a.active{
+    color:var(--ivory);
+  }
+
+  nav a.active::after{
+    width:100%;
+    background:var(--red);
+  }
+
+  /* ---------- ページヘッダー ---------- */
+  .page-hero{
+    position:relative;
+    padding:9vh 6vw 6vh;
+    background:
+      radial-gradient(ellipse at 82% 0%, rgba(178,59,59,0.10), transparent 45%),
+      linear-gradient(180deg, var(--bg-navy) 0%, var(--bg-navy-mid) 100%);
+    overflow:hidden;
+  }
+
+  .page-hero .ghost-kanji{
+    position:absolute;
+    right:-6vw;
+    top:-10vh;
+    font-size:min(38vw, 460px);
+    font-weight:800;
+    color:transparent;
+    -webkit-text-stroke:1px rgba(178,59,59,0.14);
+    line-height:1;
+    pointer-events:none;
+    user-select:none;
+  }
+
+  .page-hero-inner{
+    position:relative;
+    z-index:2;
+    max-width:640px;
+  }
+
+  .page-eyebrow{
+    display:inline-block;
+    writing-mode:vertical-rl;
+    font-family:"Shippori Mincho", serif;
+    font-size:0.9rem;
+    letter-spacing:0.4em;
+    color:var(--red-bright);
+    height:90px;
+    margin-bottom:1rem;
+  }
+
+  .page-hero h1{
+    font-size:clamp(2.1rem, 5.5vw, 3.1rem);
+    margin:0 0 0.6rem;
+    font-weight:800;
+    letter-spacing:0.05em;
+  }
+
+  .page-hero p.lead{
+    font-size:0.98rem;
+    color:var(--ivory-dim);
+    max-width:34em;
+    margin:0;
+  }
+
+  /* ---------- 本文 ---------- */
+  .about-wrap{
+    max-width:900px;
+    margin:0 auto;
+    padding:3.5rem 6vw 7rem;
+  }
+
+  .block{
+    margin-bottom:4rem;
+  }
+
+  .block-head{
+    display:flex;
+    gap:1.2rem;
+    align-items:flex-start;
+    margin-bottom:1.6rem;
+  }
+
+  .block-label{
+    writing-mode:vertical-rl;
+    font-family:"Shippori Mincho", serif;
+    font-size:0.85rem;
+    letter-spacing:0.35em;
+    color:var(--muted);
+    height:80px;
+    display:inline-block;
+  }
+
+  .block-head h2{
+    font-size:1.6rem;
+    margin:0;
+    font-weight:700;
+  }
+
+  .box{
+    background:var(--box-navy);
+    border:1px solid var(--box-border);
+    border-left:3px solid var(--red);
+    padding:2rem 2.2rem;
+  }
+
+  .box p{
+    margin:0 0 1rem;
+    color:var(--ivory-dim);
+  }
+
+  .box p:last-child{margin-bottom:0;}
+
+  /* ---------- リンク ---------- */
+  .link-group-title{
+    font-family:"Shippori Mincho", serif;
+    font-size:0.95rem;
+    letter-spacing:0.12em;
+    color:var(--red-bright);
+    margin:2rem 0 0.9rem;
+  }
+
+  .link-group-title:first-of-type{margin-top:0;}
+
+  .link-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+    gap:1.1rem;
+  }
+
+  .link-card{
+    display:flex;
+    flex-direction:column;
+    gap:0.2rem;
+    text-decoration:none;
+    background:var(--box-navy-soft);
+    border:1px solid var(--box-border);
+    border-left:3px solid var(--red);
+    padding:1rem 1.2rem;
+    transition:border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+  }
+
+  .link-card:hover,
+  .link-card:focus-visible{
+    border-color:var(--red-bright);
+    background:var(--box-navy);
+    transform:translateY(-3px);
+  }
+
+  .link-name{
+    font-family:"Shippori Mincho", serif;
+    font-weight:700;
+    font-size:1.02rem;
+    color:var(--ivory);
+  }
+
+  .link-desc{
+    font-size:0.84rem;
+    color:var(--muted);
+    line-height:1.7;
+  }
+
+  /* ---------- フォーム ---------- */
+  .form-intro{
+    color:var(--ivory-dim);
+    margin:0 0 1.6rem;
+  }
+
+  .form-group{
+    margin-bottom:1.2rem;
+  }
+
+  .form-label{
+    display:block;
+    font-family:"Shippori Mincho", serif;
+    font-size:0.9rem;
+    letter-spacing:0.1em;
+    color:var(--ivory);
+    margin-bottom:0.4rem;
+  }
+
+  .required{
+    color:var(--red-bright);
+    font-style:normal;
+  }
+
+  .form-input,
+  .form-textarea{
+    width:100%;
+    background:var(--box-navy-soft);
+    border:1px solid var(--box-border);
+    color:var(--ivory);
+    padding:0.7em 0.9em;
+    font-family:inherit;
+    font-size:0.95rem;
+  }
+
+  .form-input::placeholder,
+  .form-textarea::placeholder{
+    color:var(--muted);
+  }
+
+  .form-textarea{
+    resize:vertical;
+    min-height:150px;
+  }
+
+  .form-input:focus,
+  .form-textarea:focus{
+    outline:1px solid var(--red-bright);
+    border-color:var(--red-bright);
+  }
+
+  .field-error{
+    display:block;
+    font-size:0.8rem;
+    color:var(--red-bright);
+    margin-top:0.3rem;
+  }
+
+  .form-submit{
+    background:transparent;
+    border:1px solid var(--red-bright);
+    color:var(--ivory);
+    padding:0.8em 2.2em;
+    font-family:inherit;
+    font-size:0.95rem;
+    letter-spacing:0.08em;
+    cursor:pointer;
+    transition:background 0.3s ease;
+  }
+
+  .form-submit:hover,
+  .form-submit:focus-visible{
+    background:var(--red);
+  }
+
+  .form-submit:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+  }
+
+  .form-success{
+    background:rgba(178,59,59,0.12);
+    border:1px solid var(--red);
+    padding:1rem 1.2rem;
+    margin-bottom:1.4rem;
+    color:var(--ivory);
+    text-align:center;
+  }
+
+  .form-error-global{
+    background:rgba(178,59,59,0.12);
+    border:1px solid var(--red-bright);
+    padding:0.9rem 1.2rem;
+    margin-bottom:1.2rem;
+    color:var(--red-bright);
+    font-size:0.9rem;
+  }
+
+  /* ---------- フッター ---------- */
+  footer{
+    border-top:1px solid var(--box-border);
+    background:var(--bg-navy-mid);
+    padding:3.5rem 6vw 2.5rem;
+  }
+
+  .footer-inner{
+    max-width:900px;
+    margin:0 auto;
+  }
+
+  .hub-links ul{
+    list-style:none;
+    margin:0 0 1.6rem;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:0.6rem;
+  }
+
+  .hub-links h4{
+    font-family:"Shippori Mincho", serif;
+    font-size:1.05rem;
+    margin:0 0 1rem;
+    color:var(--ivory);
+  }
+
+  .hub-links a{
+    text-decoration:none;
+    color:var(--ivory-dim);
+    font-size:0.92rem;
+    border-bottom:1px dotted transparent;
+    transition:border-color 0.25s ease, color 0.25s ease;
+  }
+
+  .hub-links a:hover,
+  .hub-links a:focus-visible{
+    color:var(--ivory);
+    border-color:var(--red-bright);
+  }
+
+  .ai-notice{
+    font-size:0.78rem;
+    color:var(--muted);
+    line-height:1.8;
+    border-top:1px solid var(--box-border);
+    padding-top:1.4rem;
+    margin:0 0 0.8rem;
+  }
+
+  .copyright{
+    text-align:center;
+    font-size:0.78rem;
+    color:var(--muted);
+    margin:1.4rem 0 0;
+  }
+
+  /* ---------- レスポンシブ ---------- */
+  @media (max-width: 640px){
+    header{padding:14px 5vw;}
+    nav ul{gap:1.1rem;}
+    nav a{font-size:0.85rem;}
+    .page-hero{padding:12vh 6vw 5vh;}
+    .page-eyebrow{display:none;}
+    .about-wrap{padding:2.6rem 6vw 5rem;}
+    .block-label{display:none;}
+    .box{padding:1.5rem 1.4rem;}
+    .link-grid{grid-template-columns:1fr;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    nav a::after, .link-card, .form-submit{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="site-mark" href="index.html">妖怪帖<span>―夜に棲むものたちの記録―</span></a>
+  <nav>
+    <ul>
+      <li><a href="index.html">ホーム</a></li>
+      <li><a href="blog.html">日誌</a></li>
+      <li><a href="gallery.html">ギャラリー</a></li>
+      <li><a href="about.html" class="active">about</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="ghost-kanji" aria-hidden="true">帖</div>
+  <div class="page-hero-inner">
+    <span class="page-eyebrow">奥付</span>
+    <h1>about</h1>
+    <p class="lead">
+      このサイトと運営者についてです。ご連絡は下のリンクかフォームからお願いします。
+    </p>
+  </div>
+</section>
+
+<main class="about-wrap">
+
+  <section class="block">
+    <div class="block-head">
+      <span class="block-label">序</span>
+      <h2>このサイトについて</h2>
+    </div>
+    <div class="box">
+      <p>
+        「妖怪帖」は、妖怪や怪異について調べたことを書き留め、そこから生まれた漫画やイラストを置いていく、Azalea72による個人のファンサイトです。
+      </p>
+      <p>
+        日誌には勉強の進捗を、ギャラリーには漫画とイラストを、少しずつ積み重ねていきます。
+      </p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <span class="block-label">縁</span>
+      <h2>リンク</h2>
+    </div>
+
+    <p class="link-group-title">漫画・イラスト掲載サイト</p>
+    <div class="link-grid">
+      <a class="link-card" href="https://rookie.shonenjump.com/users/14728546961183734555" target="_blank" rel="noopener">
+        <span class="link-name">ジャンプルーキー</span>
+        <span class="link-desc">オリジナル漫画を掲載中</span>
+      </a>
+      <a class="link-card" href="https://www.pixiv.net/users/105728284" target="_blank" rel="noopener">
+        <span class="link-name">Pixiv</span>
+        <span class="link-desc">二次創作はこちらに掲載</span>
+      </a>
+    </div>
+
+    <p class="link-group-title">SNS・その他</p>
+    <div class="link-grid">
+      <a class="link-card" href="https://bsky.app/profile/azaleaazalea88.bsky.social" target="_blank" rel="noopener">
+        <span class="link-name">Bluesky</span>
+        <span class="link-desc">近況・作品のお知らせ</span>
+      </a>
+      <a class="link-card" href="https://www.youtube.com/@LilyPopins0512" target="_blank" rel="noopener">
+        <span class="link-name">YouTube（リリポピ）</span>
+        <span class="link-desc">動画チャンネル</span>
+      </a>
+      <a class="link-card" href="https://lilipopi.github.io/lilypopins/" target="_blank" rel="noopener">
+        <span class="link-name">リリポピのホームページ</span>
+        <span class="link-desc">別サイト</span>
+      </a>
+    </div>
+
+    <p class="link-group-title">Azalea72のホームページ</p>
+    <div class="link-grid">
+      <a class="link-card" href="https://azaleacreativeroom888.github.io/storyreviewazalea/" target="_blank" rel="noopener">
+        <span class="link-name">書評サイト</span>
+        <span class="link-desc">本・アニメ・映画・ゲーム・小説の備忘録</span>
+      </a>
+      <a class="link-card" href="https://azaleacreativeroom888.github.io/fan-english/" target="_blank" rel="noopener">
+        <span class="link-name">英語サイト（English Site）</span>
+        <span class="link-desc">英語話者と英語学習者に向けたサイト</span>
+      </a>
+      <a class="link-card" href="https://azaleacreativeroom888.github.io/fan-watercolor/" target="_blank" rel="noopener">
+        <span class="link-name">水彩画サイト</span>
+        <span class="link-desc">水彩画掲載</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="block" id="contact">
+    <div class="block-head">
+      <span class="block-label">文</span>
+      <h2>お問い合わせフォーム</h2>
+    </div>
+    <div class="box">
+      <p class="form-intro">ご質問・ご感想などはこちらからどうぞ。<br>Gmailで受け取り、返信いたします。</p>
+
+      <div data-fs-success class="form-success" style="display:none;">
+        <p>メッセージを送信しました。ありがとうございます！</p>
+      </div>
+
+      <div data-fs-error class="form-error-global" style="display:none;"></div>
+
+      <form id="contact-form" action="https://formspree.io/f/maqvpvoz" method="POST">
+
+        <div class="form-group">
+          <label class="form-label" for="name">お名前</label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="お名前">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">メールアドレス <span class="required">*</span></label>
+          <input class="form-input" type="email" id="email" name="email" data-fs-field placeholder="example@email.com" required>
+          <span data-fs-error="email" class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message">メッセージ <span class="required">*</span></label>
+          <textarea class="form-textarea" id="message" name="message" data-fs-field placeholder="メッセージを入力してください…" rows="6" required></textarea>
+          <span data-fs-error="message" class="field-error"></span>
+        </div>
+
+        <button class="form-submit" type="submit" data-fs-submit-btn>送信する</button>
+
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="hub-links">
+      <h4>Azalea Creative Room</h4>
+      <ul>
+        <li><a href="https://azalea72.github.io/">Azalea Creative Room トップ</a></li>
+        <li><a href="index.html">妖怪帖 ホーム</a></li>
+      </ul>
+    </div>
+    <p class="ai-notice">
+      当サイトに掲載されている画像・文章・作品について、AI学習への利用、トレース（トレパク）、無断転載・転載、二次利用を禁止します。スクリーンショットの転載・無断引用はご遠慮ください。
+    </p>
+    <p class="ai-notice" style="border-top:none; padding-top:0;">
+      Please refrain from using any images, text, or works on this website for AI training, tracing, unauthorized reproduction, redistribution, or secondary use.
+    </p>
+    <p class="copyright">© 妖怪帖</p>
+  </div>
+</footer>
+
+<script>
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#contact-form', formId: 'maqvpvoz' });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+</body>
+</html>
