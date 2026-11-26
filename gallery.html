@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>about ― 妖怪帖</title>
+<title>ギャラリー ― 妖怪帖</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -178,211 +178,278 @@
     margin:0;
   }
 
-  /* ---------- 本文 ---------- */
-  .about-wrap{
-    max-width:900px;
+  /* ---------- 絞り込み ---------- */
+  .gallery-wrap{
+    max-width:1080px;
     margin:0 auto;
     padding:3.5rem 6vw 7rem;
   }
 
-  .block{
-    margin-bottom:4rem;
-  }
-
-  .block-head{
+  .filters{
     display:flex;
-    gap:1.2rem;
-    align-items:flex-start;
-    margin-bottom:1.6rem;
+    gap:0.8rem;
+    margin-bottom:2.4rem;
+    flex-wrap:wrap;
   }
 
-  .block-label{
-    writing-mode:vertical-rl;
-    font-family:"Shippori Mincho", serif;
-    font-size:0.85rem;
-    letter-spacing:0.35em;
-    color:var(--muted);
-    height:80px;
-    display:inline-block;
-  }
-
-  .block-head h2{
-    font-size:1.6rem;
-    margin:0;
-    font-weight:700;
-  }
-
-  .box{
-    background:var(--box-navy);
+  .filter-btn{
+    background:transparent;
     border:1px solid var(--box-border);
-    border-left:3px solid var(--red);
-    padding:2rem 2.2rem;
-  }
-
-  .box p{
-    margin:0 0 1rem;
     color:var(--ivory-dim);
-  }
-
-  .box p:last-child{margin-bottom:0;}
-
-  /* ---------- リンク ---------- */
-  .link-group-title{
     font-family:"Shippori Mincho", serif;
     font-size:0.95rem;
-    letter-spacing:0.12em;
-    color:var(--red-bright);
-    margin:2rem 0 0.9rem;
+    letter-spacing:0.1em;
+    padding:0.5em 1.6em;
+    cursor:pointer;
+    transition:background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
   }
 
-  .link-group-title:first-of-type{margin-top:0;}
-
-  .link-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
-    gap:1.1rem;
-  }
-
-  .link-card{
-    display:flex;
-    flex-direction:column;
-    gap:0.2rem;
-    text-decoration:none;
-    background:var(--box-navy-soft);
-    border:1px solid var(--box-border);
-    border-left:3px solid var(--red);
-    padding:1rem 1.2rem;
-    transition:border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
-  }
-
-  .link-card:hover,
-  .link-card:focus-visible{
+  .filter-btn:hover,
+  .filter-btn:focus-visible{
     border-color:var(--red-bright);
-    background:var(--box-navy);
-    transform:translateY(-3px);
-  }
-
-  .link-name{
-    font-family:"Shippori Mincho", serif;
-    font-weight:700;
-    font-size:1.02rem;
     color:var(--ivory);
   }
 
-  .link-desc{
-    font-size:0.84rem;
+  .filter-btn.is-active{
+    background:var(--red);
+    border-color:var(--red);
+    color:var(--ivory);
+  }
+
+  /* ---------- グリッド ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1.6rem;
+  }
+
+  .work{
+    margin:0;
+    background:var(--box-navy);
+    border:1px solid var(--box-border);
+    border-left:3px solid var(--red);
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    transition:transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .work:hover,
+  .work:focus-visible{
+    transform:translateY(-4px);
+    border-color:var(--red-bright);
+  }
+
+  .work.is-hidden{display:none;}
+
+  .thumb{
+    aspect-ratio:4 / 5;
+    background:var(--box-navy-soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border-bottom:1px solid var(--box-border);
+  }
+
+  .thumb img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  /* 画像を入れる前の仮表示 */
+  .thumb .placeholder{
+    font-family:"Shippori Mincho", serif;
+    font-size:3.2rem;
+    font-weight:800;
+    color:transparent;
+    -webkit-text-stroke:1px rgba(209,80,79,0.55);
+    letter-spacing:0.1em;
+  }
+
+  .work figcaption{
+    padding:1rem 1.2rem 1.2rem;
+  }
+
+  .work .kind{
+    display:block;
+    font-family:"Shippori Mincho", serif;
+    font-size:0.78rem;
+    letter-spacing:0.15em;
+    color:var(--red-bright);
+  }
+
+  .work .title{
+    display:block;
+    font-family:"Shippori Mincho", serif;
+    font-size:1.05rem;
+    font-weight:700;
+    color:var(--ivory);
+    margin-top:0.2rem;
+  }
+
+  .work .note{
+    display:block;
+    font-size:0.85rem;
     color:var(--muted);
+    margin-top:0.3rem;
     line-height:1.7;
   }
 
-  /* ---------- フォーム ---------- */
-  .form-intro{
-    color:var(--ivory-dim);
-    margin:0 0 1.6rem;
+  /* ---------- ライトボックス ---------- */
+  .lightbox{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:rgba(5,9,18,0.94);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:5vh 5vw;
   }
 
-  .form-group{
-    margin-bottom:1.2rem;
+  .lightbox.is-open{display:flex;}
+
+  .lightbox-inner{
+    max-width:min(760px, 100%);
+    max-height:100%;
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
+    align-items:center;
   }
 
-  .form-label{
+  .lightbox-stage{
+    max-width:100%;
+    max-height:74vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .lightbox-stage img{
+    max-width:100%;
+    max-height:74vh;
     display:block;
-    font-family:"Shippori Mincho", serif;
-    font-size:0.9rem;
-    letter-spacing:0.1em;
-    color:var(--ivory);
-    margin-bottom:0.4rem;
+    border:1px solid var(--box-border);
   }
 
-  .required{
-    color:var(--red-bright);
-    font-style:normal;
-  }
-
-  .form-input,
-  .form-textarea{
-    width:100%;
+  .lightbox-stage .placeholder{
+    width:min(70vw, 420px);
+    aspect-ratio:4 / 5;
     background:var(--box-navy-soft);
     border:1px solid var(--box-border);
-    color:var(--ivory);
-    padding:0.7em 0.9em;
-    font-family:inherit;
-    font-size:0.95rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:"Shippori Mincho", serif;
+    font-size:4rem;
+    font-weight:800;
+    color:transparent;
+    -webkit-text-stroke:1px rgba(209,80,79,0.6);
   }
 
-  .form-input::placeholder,
-  .form-textarea::placeholder{
-    color:var(--muted);
-  }
-
-  .form-textarea{
-    resize:vertical;
-    min-height:150px;
-  }
-
-  .form-input:focus,
-  .form-textarea:focus{
-    outline:1px solid var(--red-bright);
-    border-color:var(--red-bright);
-  }
-
-  .field-error{
-    display:block;
-    font-size:0.8rem;
-    color:var(--red-bright);
-    margin-top:0.3rem;
-  }
-
-  .form-submit{
-    background:transparent;
-    border:1px solid var(--red-bright);
-    color:var(--ivory);
-    padding:0.8em 2.2em;
-    font-family:inherit;
-    font-size:0.95rem;
-    letter-spacing:0.08em;
-    cursor:pointer;
-    transition:background 0.3s ease;
-  }
-
-  .form-submit:hover,
-  .form-submit:focus-visible{
-    background:var(--red);
-  }
-
-  .form-submit:disabled{
-    opacity:0.5;
-    cursor:not-allowed;
-  }
-
-  .form-success{
-    background:rgba(178,59,59,0.12);
-    border:1px solid var(--red);
-    padding:1rem 1.2rem;
-    margin-bottom:1.4rem;
-    color:var(--ivory);
+  .lightbox-caption{
     text-align:center;
+    color:var(--ivory-dim);
+    font-size:0.95rem;
   }
 
-  .form-error-global{
-    background:rgba(178,59,59,0.12);
-    border:1px solid var(--red-bright);
-    padding:0.9rem 1.2rem;
-    margin-bottom:1.2rem;
-    color:var(--red-bright);
-    font-size:0.9rem;
+  .lightbox-caption strong{
+    display:block;
+    font-family:"Shippori Mincho", serif;
+    color:var(--ivory);
+    font-size:1.1rem;
   }
+
+  .lb-btn{
+    position:absolute;
+    background:transparent;
+    border:1px solid var(--box-border);
+    color:var(--ivory);
+    font-family:inherit;
+    font-size:1.1rem;
+    width:44px;
+    height:44px;
+    cursor:pointer;
+    transition:background 0.25s ease, border-color 0.25s ease;
+  }
+
+  .lb-btn:hover,
+  .lb-btn:focus-visible{
+    background:var(--red);
+    border-color:var(--red);
+  }
+
+  .lb-close{top:20px; right:20px;}
+  .lb-prev{left:20px; top:50%; transform:translateY(-50%);}
+  .lb-next{right:20px; top:50%; transform:translateY(-50%);}
 
   /* ---------- フッター ---------- */
   footer{
     border-top:1px solid var(--box-border);
     background:var(--bg-navy-mid);
-    padding:3.5rem 6vw 2.5rem;
+    padding:4.5rem 6vw 3rem;
   }
 
-  .footer-inner{
-    max-width:900px;
+  .footer-grid{
+    max-width:1080px;
     margin:0 auto;
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:3rem;
+  }
+
+  .footer-grid h4{
+    font-family:"Shippori Mincho", serif;
+    font-size:1.05rem;
+    margin:0 0 1rem;
+    color:var(--ivory);
+  }
+
+  .contact-form{
+    display:flex;
+    flex-direction:column;
+    gap:0.8rem;
+    max-width:420px;
+  }
+
+  .contact-form input,
+  .contact-form textarea{
+    background:var(--box-navy-soft);
+    border:1px solid var(--box-border);
+    color:var(--ivory);
+    padding:0.7em 0.9em;
+    font-family:inherit;
+    font-size:0.92rem;
+  }
+
+  .contact-form textarea{resize:vertical; min-height:100px;}
+
+  .contact-form input:focus,
+  .contact-form textarea:focus,
+  .contact-form input:focus-visible,
+  .contact-form textarea:focus-visible{
+    outline:1px solid var(--red-bright);
+  }
+
+  .contact-form button{
+    align-self:flex-start;
+    background:transparent;
+    border:1px solid var(--red-bright);
+    color:var(--ivory);
+    padding:0.7em 1.8em;
+    font-family:inherit;
+    font-size:0.92rem;
+    cursor:pointer;
+    transition:background 0.3s ease;
+  }
+
+  .contact-form button:hover,
+  .contact-form button:focus-visible{
+    background:var(--red);
   }
 
   .hub-links ul{
@@ -392,13 +459,6 @@
     display:flex;
     flex-direction:column;
     gap:0.6rem;
-  }
-
-  .hub-links h4{
-    font-family:"Shippori Mincho", serif;
-    font-size:1.05rem;
-    margin:0 0 1rem;
-    color:var(--ivory);
   }
 
   .hub-links a{
@@ -420,33 +480,42 @@
     color:var(--muted);
     line-height:1.8;
     border-top:1px solid var(--box-border);
-    padding-top:1.4rem;
-    margin:0 0 0.8rem;
+    margin-top:2.4rem;
+    padding-top:1.6rem;
+    max-width:1080px;
+    margin-left:auto;
+    margin-right:auto;
   }
 
   .copyright{
     text-align:center;
     font-size:0.78rem;
     color:var(--muted);
-    margin:1.4rem 0 0;
+    margin-top:1.6rem;
   }
 
   /* ---------- レスポンシブ ---------- */
+  @media (max-width: 860px){
+    .grid{grid-template-columns:repeat(2, 1fr);}
+    .footer-grid{grid-template-columns:1fr;}
+  }
+
   @media (max-width: 640px){
     header{padding:14px 5vw;}
     nav ul{gap:1.1rem;}
     nav a{font-size:0.85rem;}
     .page-hero{padding:12vh 6vw 5vh;}
     .page-eyebrow{display:none;}
-    .about-wrap{padding:2.6rem 6vw 5rem;}
-    .block-label{display:none;}
-    .box{padding:1.5rem 1.4rem;}
-    .link-grid{grid-template-columns:1fr;}
+    .gallery-wrap{padding:2.6rem 6vw 5rem;}
+    .grid{grid-template-columns:1fr;}
+    .lb-prev{left:8px;}
+    .lb-next{right:8px;}
+    .lb-close{top:12px; right:12px;}
   }
 
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
-    nav a::after, .link-card, .form-submit{transition:none;}
+    nav a::after, .work, .filter-btn, .lb-btn, .contact-form button{transition:none;}
   }
 </style>
 </head>
@@ -458,134 +527,117 @@
     <ul>
       <li><a href="index.html">ホーム</a></li>
       <li><a href="blog.html">日誌</a></li>
-      <li><a href="gallery.html">ギャラリー</a></li>
-      <li><a href="about.html" class="active">about</a></li>
+      <li><a href="gallery.html" class="active">ギャラリー</a></li>
+      <li><a href="about.html">about</a></li>
     </ul>
   </nav>
 </header>
 
 <section class="page-hero">
-  <div class="ghost-kanji" aria-hidden="true">帖</div>
+  <div class="ghost-kanji" aria-hidden="true">画</div>
   <div class="page-hero-inner">
-    <span class="page-eyebrow">奥付</span>
-    <h1>about</h1>
+    <span class="page-eyebrow">画帖</span>
+    <h1>ギャラリー</h1>
     <p class="lead">
-      このサイトと運営者についてです。ご連絡は下のリンクかフォームからお願いします。
+      妖怪をモチーフにした漫画とイラストを並べています。作品をクリックすると大きく表示されます。
     </p>
   </div>
 </section>
 
-<main class="about-wrap">
+<main class="gallery-wrap">
 
-  <section class="block">
-    <div class="block-head">
-      <span class="block-label">序</span>
-      <h2>このサイトについて</h2>
-    </div>
-    <div class="box">
-      <p>
-        「妖怪帖」は、妖怪や怪異について調べたことを書き留め、そこから生まれた漫画やイラストを置いていく、Azalea72による個人のファンサイトです。
-      </p>
-      <p>
-        日誌には勉強の進捗を、ギャラリーには漫画とイラストを、少しずつ積み重ねていきます。
-      </p>
-    </div>
-  </section>
+  <div class="filters" role="group" aria-label="作品の絞り込み">
+    <button class="filter-btn is-active" data-filter="all">すべて</button>
+    <button class="filter-btn" data-filter="manga">漫画</button>
+    <button class="filter-btn" data-filter="illust">イラスト</button>
+  </div>
 
-  <section class="block">
-    <div class="block-head">
-      <span class="block-label">縁</span>
-      <h2>リンク</h2>
-    </div>
+  <!--
+    作品の追加方法:
+    .thumb の中の <div class="placeholder">…</div> を
+    <img src="images/ファイル名.png" alt="作品名"> に置き換えてください。
+    data-category は manga か illust にします。
+  -->
+  <div class="grid" id="grid">
 
-    <p class="link-group-title">漫画・イラスト掲載サイト</p>
-    <div class="link-grid">
-      <a class="link-card" href="https://rookie.shonenjump.com/users/14728546961183734555" target="_blank" rel="noopener">
-        <span class="link-name">ジャンプルーキー</span>
-        <span class="link-desc">オリジナル漫画を掲載中</span>
-      </a>
-      <a class="link-card" href="https://www.pixiv.net/users/105728284" target="_blank" rel="noopener">
-        <span class="link-name">Pixiv</span>
-        <span class="link-desc">二次創作はこちらに掲載</span>
-      </a>
-    </div>
+    <figure class="work" data-category="illust" tabindex="0">
+      <div class="thumb"><div class="placeholder">河童</div></div>
+      <figcaption>
+        <span class="kind">イラスト</span>
+        <span class="title">河童</span>
+        <span class="note">水辺に棲む妖怪。皿と甲羅を丁寧に描いてみた一枚。</span>
+      </figcaption>
+    </figure>
 
-    <p class="link-group-title">SNS・その他</p>
-    <div class="link-grid">
-      <a class="link-card" href="https://bsky.app/profile/azaleaazalea88.bsky.social" target="_blank" rel="noopener">
-        <span class="link-name">Bluesky</span>
-        <span class="link-desc">近況・作品のお知らせ</span>
-      </a>
-      <a class="link-card" href="https://www.youtube.com/@LilyPopins0512" target="_blank" rel="noopener">
-        <span class="link-name">YouTube（リリポピ）</span>
-        <span class="link-desc">動画チャンネル</span>
-      </a>
-      <a class="link-card" href="https://lilipopi.github.io/lilypopins/" target="_blank" rel="noopener">
-        <span class="link-name">リリポピのホームページ</span>
-        <span class="link-desc">別サイト</span>
-      </a>
-    </div>
+    <figure class="work" data-category="manga" tabindex="0">
+      <div class="thumb"><div class="placeholder">座敷童子</div></div>
+      <figcaption>
+        <span class="kind">漫画</span>
+        <span class="title">座敷童子の来た家</span>
+        <span class="note">古い家に現れる子どもの話。短い一話完結の漫画。</span>
+      </figcaption>
+    </figure>
 
-    <p class="link-group-title">Azalea72のホームページ</p>
-    <div class="link-grid">
-      <a class="link-card" href="https://azaleacreativeroom888.github.io/storyreviewazalea/" target="_blank" rel="noopener">
-        <span class="link-name">書評サイト</span>
-        <span class="link-desc">本・アニメ・映画・ゲーム・小説の備忘録</span>
-      </a>
-      <a class="link-card" href="https://azaleacreativeroom888.github.io/fan-english/" target="_blank" rel="noopener">
-        <span class="link-name">英語サイト（English Site）</span>
-        <span class="link-desc">英語話者と英語学習者に向けたサイト</span>
-      </a>
-      <a class="link-card" href="https://azaleacreativeroom888.github.io/fan-watercolor/" target="_blank" rel="noopener">
-        <span class="link-name">水彩画サイト</span>
-        <span class="link-desc">水彩画掲載</span>
-      </a>
-    </div>
-  </section>
+    <figure class="work" data-category="illust" tabindex="0">
+      <div class="thumb"><div class="placeholder">雪女</div></div>
+      <figcaption>
+        <span class="kind">イラスト</span>
+        <span class="title">雪女</span>
+        <span class="note">吹雪の夜に現れる姿を、白と青で描いたイラスト。</span>
+      </figcaption>
+    </figure>
 
-  <section class="block" id="contact">
-    <div class="block-head">
-      <span class="block-label">文</span>
-      <h2>お問い合わせフォーム</h2>
-    </div>
-    <div class="box">
-      <p class="form-intro">ご質問・ご感想などはこちらからどうぞ。<br>Gmailで受け取り、返信いたします。</p>
+    <figure class="work" data-category="manga" tabindex="0">
+      <div class="thumb"><div class="placeholder">百鬼夜行</div></div>
+      <figcaption>
+        <span class="kind">漫画</span>
+        <span class="title">百鬼夜行の夜</span>
+        <span class="note">行列に出会ってしまった人の一夜を描いた漫画。</span>
+      </figcaption>
+    </figure>
 
-      <div data-fs-success class="form-success" style="display:none;">
-        <p>メッセージを送信しました。ありがとうございます！</p>
-      </div>
+    <figure class="work" data-category="illust" tabindex="0">
+      <div class="thumb"><div class="placeholder">狐火</div></div>
+      <figcaption>
+        <span class="kind">イラスト</span>
+        <span class="title">狐火</span>
+        <span class="note">夜道に並んで揺れる火を描いた一枚。</span>
+      </figcaption>
+    </figure>
 
-      <div data-fs-error class="form-error-global" style="display:none;"></div>
+    <figure class="work" data-category="illust" tabindex="0">
+      <div class="thumb"><div class="placeholder">ぬらりひょん</div></div>
+      <figcaption>
+        <span class="kind">イラスト</span>
+        <span class="title">ぬらりひょん</span>
+        <span class="note">いつの間にか家に上がり込んでいる妖怪の落書き。</span>
+      </figcaption>
+    </figure>
 
-      <form id="contact-form" action="https://formspree.io/f/maqvpvoz" method="POST">
-
-        <div class="form-group">
-          <label class="form-label" for="name">お名前</label>
-          <input class="form-input" type="text" id="name" name="name" placeholder="お名前">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="email">メールアドレス <span class="required">*</span></label>
-          <input class="form-input" type="email" id="email" name="email" data-fs-field placeholder="example@email.com" required>
-          <span data-fs-error="email" class="field-error"></span>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="message">メッセージ <span class="required">*</span></label>
-          <textarea class="form-textarea" id="message" name="message" data-fs-field placeholder="メッセージを入力してください…" rows="6" required></textarea>
-          <span data-fs-error="message" class="field-error"></span>
-        </div>
-
-        <button class="form-submit" type="submit" data-fs-submit-btn>送信する</button>
-
-      </form>
-    </div>
-  </section>
-
+  </div>
 </main>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="作品の拡大表示">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="閉じる">×</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="前の作品">‹</button>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="次の作品">›</button>
+  <div class="lightbox-inner">
+    <div class="lightbox-stage" id="lbStage"></div>
+    <div class="lightbox-caption" id="lbCaption"></div>
+  </div>
+</div>
+
 <footer>
-  <div class="footer-inner">
+  <div class="footer-grid">
+    <div>
+      <h4>お問い合わせ</h4>
+      <form class="contact-form" action="https://formspree.io/f/maqvpvoz" method="POST">
+        <input type="text" name="name" placeholder="お名前" required>
+        <input type="email" name="email" placeholder="メールアドレス" required>
+        <textarea name="message" placeholder="メッセージ" required></textarea>
+        <button type="submit">送信する</button>
+      </form>
+    </div>
     <div class="hub-links">
       <h4>Azalea Creative Room</h4>
       <ul>
@@ -593,21 +645,108 @@
         <li><a href="index.html">妖怪帖 ホーム</a></li>
       </ul>
     </div>
-    <p class="ai-notice">
-      当サイトに掲載されている画像・文章・作品について、AI学習への利用、トレース（トレパク）、無断転載・転載、二次利用を禁止します。スクリーンショットの転載・無断引用はご遠慮ください。
-    </p>
-    <p class="ai-notice" style="border-top:none; padding-top:0;">
-      Please refrain from using any images, text, or works on this website for AI training, tracing, unauthorized reproduction, redistribution, or secondary use.
-    </p>
-    <p class="copyright">© 妖怪帖</p>
   </div>
+  <p class="ai-notice">
+    当サイトに掲載しているイラスト・漫画・文章の無断転載、およびAIの学習データとしての利用を禁じます。
+  </p>
+  <p class="copyright">© 妖怪帖</p>
 </footer>
 
 <script>
-  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
-  formspree('initForm', { formElement: '#contact-form', formId: 'maqvpvoz' });
+(function(){
+  var works = Array.prototype.slice.call(document.querySelectorAll('.work'));
+  var buttons = document.querySelectorAll('.filter-btn');
+  var lightbox = document.getElementById('lightbox');
+  var stage = document.getElementById('lbStage');
+  var caption = document.getElementById('lbCaption');
+  var current = 0;
+
+  function visibleWorks(){
+    return works.filter(function(w){ return !w.classList.contains('is-hidden'); });
+  }
+
+  /* 絞り込み */
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      buttons.forEach(function(b){ b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      var f = btn.getAttribute('data-filter');
+      works.forEach(function(w){
+        var show = (f === 'all' || w.getAttribute('data-category') === f);
+        w.classList.toggle('is-hidden', !show);
+      });
+    });
+  });
+
+  /* ライトボックス */
+  function render(work){
+    stage.innerHTML = '';
+    var img = work.querySelector('.thumb img');
+    if(img){
+      var big = document.createElement('img');
+      big.src = img.src;
+      big.alt = img.alt;
+      stage.appendChild(big);
+    }else{
+      var ph = work.querySelector('.placeholder');
+      var box = document.createElement('div');
+      box.className = 'placeholder';
+      box.textContent = ph ? ph.textContent : '';
+      stage.appendChild(box);
+    }
+    var title = work.querySelector('.title').textContent;
+    var note = work.querySelector('.note').textContent;
+    caption.innerHTML = '';
+    var s = document.createElement('strong');
+    s.textContent = title;
+    caption.appendChild(s);
+    caption.appendChild(document.createTextNode(note));
+  }
+
+  function open(work){
+    var list = visibleWorks();
+    current = list.indexOf(work);
+    render(work);
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('lbClose').focus();
+  }
+
+  function close(){
+    lightbox.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  function step(d){
+    var list = visibleWorks();
+    if(!list.length) return;
+    current = (current + d + list.length) % list.length;
+    render(list[current]);
+  }
+
+  works.forEach(function(w){
+    w.addEventListener('click', function(){ open(w); });
+    w.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(w); }
+    });
+  });
+
+  document.getElementById('lbClose').addEventListener('click', close);
+  document.getElementById('lbPrev').addEventListener('click', function(){ step(-1); });
+  document.getElementById('lbNext').addEventListener('click', function(){ step(1); });
+
+  lightbox.addEventListener('click', function(e){
+    if(e.target === lightbox) close();
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(!lightbox.classList.contains('is-open')) return;
+    if(e.key === 'Escape') close();
+    if(e.key === 'ArrowLeft') step(-1);
+    if(e.key === 'ArrowRight') step(1);
+  });
+})();
 </script>
-<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 
 </body>
 </html>
